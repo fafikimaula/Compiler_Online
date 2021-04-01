@@ -11,9 +11,10 @@ include_once("config.php");
     $source_code = $_POST['source_code'];
     $language_code = $_POST['language_code'];
     $extention = $_POST['extention'];
+    $user_id = $_POST['user_id'];
 
     // Insert user data into table
-    $new_file = mysqli_query($mysqli, "INSERT INTO file(name,source_code,language_code,extention) VALUES('$name','$source_code','$language_code','$extention')");
+    $new_file = mysqli_query($mysqli, "INSERT INTO file(user_id,name,source_code,language_code,extention) VALUES('$user_id','$name','$source_code','$language_code','$extention')");
 
     if ($new_file) {
         $hasil =  array('pesan' => "Berhasil menambah file baru", 'status' => true);

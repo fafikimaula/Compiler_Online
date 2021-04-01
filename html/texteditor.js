@@ -4,7 +4,24 @@ const PYTHON_KEY = "70";
 const SQL_KEY = "82";
 const NODEJS_KEY = "63";
 const BASE_URL = "http://172.25.108.131:8081/submissions";
-const API_URL = window.location.origin + '/' + window.location.pathname + 'api' + '/';
+//const API_URL = window.location.origin + '/' + window.location.pathname + 'api' + '/';
+const API_URL = "http://localhost/galaxy/html/api/";
+
+
+function getMainData() {
+  $(document).ready(function () {
+    let id = localStorage.getItem("id");
+    let first_name = localStorage.getItem("first_name");
+    let photo = localStorage.getItem("photo");
+    console.log("first_name " + first_name);
+    if(id == null){
+      setTimeout("location.href = 'signin.html';",0);
+    } else {
+      document.getElementById("nameAccount").innerHTML = first_name
+      document.getElementById("imageAccount").src = photo
+    }
+  });
+}
 
 function getAllFile() {
   console.log("trying to get all file, url: " + API_URL)
@@ -110,7 +127,8 @@ function createNewFile() {
         "name": 'HelloWorld-' + currentDate,
         "source_code": '',
         "language_code": 53,
-        "extention": 'c'
+        "extention": 'c',
+        'user_id': localStorage.getItem("id"),
       }
       console.log("start create new file, name:" + data.name)
       $.ajax({
@@ -134,7 +152,7 @@ function createNewFile() {
 
 
 function getHistoryFile() {
-  console.log("trying to get all file, url: " + API_URL)
+  console.log("trying to get all history file, url: " + API_URL)
   $(document).ready(function () {
     let allFileElement = document.getElementById("historyFile");
     //$("#ans").html("Loading...");
