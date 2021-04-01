@@ -12,7 +12,6 @@
 </head>
 
 <body class="h-screen overflow-hidden flex items-center justify-center" style="background: #edf2f7;">
-
     <!-- Galaxy -->
     <div class="h-screen w-full flex antialiased text-gray-200 bg-gray-900 overflow-hidden">
         <div class="flex-1 flex flex-col">
@@ -66,8 +65,8 @@
                         
 
                     </div>
-
-                    <div class=" mt-2 mb-2 p-2 flex-none">
+                    
+                    <div class=" mt-2 mb-2 p-2 flex-none" id="createNewFileButton">
                         <button
                             class="w-full text-white px-4 w-auto h-10 bg-blue-700 rounded-md hover:bg-blue-800 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
                             <svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" class="w-6 h-6 inline-block">
@@ -111,7 +110,6 @@
                                 <option value="70">Python</option>
                                 <option value="82">SQL</option>
                                 <option value="63">Java Script</option>
-                             
                               </select>
                         </div>
                     </div>
@@ -200,6 +198,7 @@
         codeEditor("53");
         getAllFile();
         getHistoryFile();
+        createNewFile();
     };
 </script>
 

@@ -9,22 +9,21 @@ const API_URL = window.location.origin + '/' + window.location.pathname + 'api' 
 function getAllFile() {
   console.log("trying to get all file, url: " + API_URL)
   $(document).ready(function () {
-    
     let allFileElement = document.getElementById("allFile");
     //$("#ans").html("Loading...");
     $.ajax({
-      url: API_URL +  "get_file.php",
+      url: API_URL + "get_file.php",
       type: "get",
       dataType: 'json',
       success: function (response) {
         console.log("all file : " + response);
-        for (const file of response){
+        allFileElement.innerHTML = '';
+        for (const file of response) {
           console.log(file);
           let sourceCode = `${file.source_code}`;
           let fileName = file.name + `.` + file.extention;
-          allFileElement.innerHTML = `
-          <div> 
-          <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\``+`); document.getElementById("fileOpenName").innerHTML = "` +fileName +`"; document.getElementById("languageSelect").value  = "`+ file.language_code +`";' x-data="{ open: false, color: false }"
+          allFileElement.innerHTML += `
+          <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\`` + `); document.getElementById("fileOpenName").innerHTML = "` + fileName + `"; document.getElementById("languageSelect").value  = "` + file.language_code + `";' x-data="{ open: false, color: false }"
           @keydown.escape="open = false" @click.away="open = false">
           <div
               class="flex items-center bg-gray-800 hover:bg-blue-700 rounded-md p-3 text-white cursor-pointer transition duration-500 ease-in-out hover:shadow hover:bg-indigo-600">
@@ -38,8 +37,8 @@ function getAllFile() {
 
               </div>
               <div class="px-3 mr-auto">
-                  <h4 class="font-bold">`+ fileName +  `</h4>
-                  <small class="text-xs"> `+  file.created_at +`</small>
+                  <h4 class="font-bold">`+ fileName + `</h4>
+                  <small class="text-xs"> `+ file.created_at + `</small>
               </div>
               <div class="relative">
                   <a href="javascript:;" @click="open = !open">
@@ -91,10 +90,8 @@ function getAllFile() {
               </div>
           </div>
       </div>
-          </div>
          `;
         }
-          
       },
       error: function (errormessage) {
         console.log(errormessage.responseJSON);
@@ -104,6 +101,37 @@ function getAllFile() {
   });
 }
 
+function createNewFile() {
+  $(document).ready(function () {
+    $("#createNewFileButton").click(function () {
+      let today = new Date();
+      let currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+      let data = {
+        "name": 'HelloWorld-' + currentDate,
+        "source_code": '',
+        "language_code": 53,
+        "extention": 'c'
+      }
+      console.log("start create new file, name:" + data.name)
+      $.ajax({
+        url: API_URL + "add_file.php",
+        type: "post",
+        dataType: 'json',
+        data: data,
+        success: function (response) {
+          if (response.status == true) {
+            getAllFile()
+          }
+        },
+        error: function (errormessage) {
+          console.log(errormessage.responseJSON);
+        }
+      });
+    });
+  });
+
+}
+
 
 function getHistoryFile() {
   console.log("trying to get all file, url: " + API_URL)
@@ -111,18 +139,18 @@ function getHistoryFile() {
     let allFileElement = document.getElementById("historyFile");
     //$("#ans").html("Loading...");
     $.ajax({
-      url: API_URL +  "get_file.php",
+      url: API_URL + "get_file.php",
       type: "get",
       dataType: 'json',
       success: function (response) {
         console.log("all history file : " + response);
-        for (const file of response){
+        allFileElement.innerHTML = '';
+        for (const file of response) {
           console.log(file);
           let sourceCode = `${file.source_code}`;
           let fileName = file.name + `.` + file.extention;
-          allFileElement.innerHTML = `
-          <div> 
-          <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\``+`); document.getElementById("fileOpenName").innerHTML = "` +fileName +`"; ' x-data="{ open: false, color: false }"
+          allFileElement.innerHTML += `
+          <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\`` + `); document.getElementById("fileOpenName").innerHTML = "` + fileName + `"; document.getElementById("languageSelect").value  = "` + file.language_code + `";' x-data="{ open: false, color: false }"
           @keydown.escape="open = false" @click.away="open = false">
           <div
               class="flex items-center bg-gray-800 hover:bg-blue-700 rounded-md p-3 text-white cursor-pointer transition duration-500 ease-in-out hover:shadow hover:bg-indigo-600">
@@ -136,8 +164,8 @@ function getHistoryFile() {
 
               </div>
               <div class="px-3 mr-auto">
-                  <h4 class="font-bold">`+ fileName +  `</h4>
-                  <small class="text-xs"> `+  file.created_at +`</small>
+                  <h4 class="font-bold">`+ fileName + `</h4>
+                  <small class="text-xs"> `+ file.created_at + `</small>
               </div>
               <div class="relative">
                   <a href="javascript:;" @click="open = !open">
@@ -189,10 +217,8 @@ function getHistoryFile() {
               </div>
           </div>
       </div>
-          </div>
          `;
         }
-          
       },
       error: function (errormessage) {
         console.log(errormessage.responseJSON);
