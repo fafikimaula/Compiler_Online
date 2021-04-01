@@ -11,6 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_REQUEST['search'])) {
         $search = $_REQUEST['search'];
         $hasil = mysqli_query($mysqli, "SELECT * FROM file WHERE name LIKE '%$search%' ORDER BY created_at DESC");
+    } else if (isset($_REQUEST['history'])) {
+        $id = $_SESSION['id'];
+        $hasil = mysqli_query($mysqli, "SELECT * FROM file WHERE user_id=$id ORDER BY updated_at DESC");
     } else {
         $id = $_SESSION['id'];
         $hasil = mysqli_query($mysqli, "SELECT * FROM file WHERE user_id=$id ORDER BY created_at DESC");

@@ -83,8 +83,11 @@
                     <div class="chat-header px-6 py-4 flex flex-row flex-none justify-between items-center shadow">
                         <div class="flex">
 
-                            <div class="text-xl">
-                                <p id="fileOpenName" class="font-bold"></p>
+                            <div class="text-xl inline-flex">
+                            <div id="idOpenFile" class="hidden"></div>
+                            <span id="fileOpenName" class="flex-1 font-bold rounded-md py-2 px-2 border border-none focus:border-gray-800 bg-gray-900 focus:bg-gray-700 outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in"
+                                        type="text" value="" placeholder="Name File" contenteditable></span>
+                                <p id="fileOpenExtention" class="flex-1 font-bold py-2 px-2"></p>
                                 <p></p>
                             </div>
 
@@ -196,7 +199,7 @@
     }
     window.onload = function () {
         getMainData()
-        codeEditor("53");
+        codeEditor();
         getAllFile();
         getHistoryFile();
         createNewFile();

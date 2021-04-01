@@ -10,23 +10,23 @@ const API_URL = "http://localhost/galaxy/html/api/";
 
 function getExtention(key) {
   switch (key) {
-    case 62:
-      return ".java"
+    case "62":
+      return "java"
       break;
-    case 53:
-      return ".c"
+    case "53":
+      return "c"
       break;
-    case 70:
-      return ".py"
+    case "70":
+      return "py"
       break;
-    case 82:
-      return ".sql"
+    case "82":
+      return "sql"
       break;
-    case 63:
-      return ".js"
+    case "63":
+      return "js"
       break;
     default:
-      return ".js"
+      return "js"
       break;
   }
 }
@@ -64,7 +64,7 @@ function getAllFile() {
           let fileName = file.name + `.` + file.extention;
           allFileElement.innerHTML += `
          
-          <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\`` + `); document.getElementById("fileOpenName").innerHTML = "` + fileName + `"; document.getElementById("languageSelect").value  = "` + file.language_code + `";' x-data="{ open: false, color: false }"
+          <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\`` + `); document.getElementById("fileOpenExtention").innerHTML = ".` + file.extention + `"; document.getElementById("fileOpenName").innerHTML = "` + file.name + `"; document.getElementById("languageSelect").value  = "` + file.language_code + `"; document.getElementById("idOpenFile").innerHTML = "` + file.id + `";' x-data="{ open: false, color: false }"
           @keydown.escape="open = false" @click.away="open = false">
           <div
               class="flex items-center bg-gray-800 hover:bg-blue-700 rounded-md p-3 text-white cursor-pointer transition duration-500 ease-in-out hover:shadow hover:bg-indigo-600">
@@ -278,7 +278,7 @@ function codeEditor(lang_id, datainput) {
     $("#runButton").click(function () {
       let code = editor.getValue();
       $("#ans").html("Loading...");
-     
+            
       console.log(code);
       let data = {
         source_code: code,
@@ -324,7 +324,7 @@ function codeEditor(lang_id, datainput) {
               "source_code": code,
               "language_code": lang_id,
               "extention": getExtention(lang_id),
-              "id": document.getElementById("idFile").innerHTML,
+              "id": document.getElementById("idOpenFile").innerHTML,
             };
             console.log(dataSave);
             $.ajax({
