@@ -31,6 +31,30 @@ function getExtention(key) {
     }
 }
 
+
+function getKey(extention) {
+    switch (extention) {
+        case "java":
+            return "62"
+            break;
+        case "c":
+            return "53"
+            break;
+        case "py":
+            return "70"
+            break;
+        case "sql":
+            return "82"
+            break;
+        case "js":
+            return "63"
+            break;
+        default:
+            return "c"
+            break;
+    }
+}
+
 function getMainData() {
     $(document).ready(function() {
         let id = localStorage.getItem("id");
@@ -459,6 +483,68 @@ function printFile() {
     });
 }
 
+function uploadFile() {
+    $(document).ready(function() {
+        $("#uploadFileButton").click(function() {
+            let fileName = document.getElementById("fileOpenName").innerHTML + document.getElementById("fileOpenExtention").innerHTML;
+            let editor = ace.edit("editor");
+            let code = editor.getValue();
+            console.log("upload file" + fileName)
+
+            var fileInput = window._protected_reference = document.createElement("INPUT");
+            fileInput.type = "file";
+            fileInput.accept = ".java,.c,.py";
+
+            // (cancel will not trigger 'change')
+            fileInput.addEventListener('change', function(ev2) {
+                var file = fileInput.files[0];
+                var textType = /text.*/;
+
+                if (file.type.match(textType)) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        var content = reader.result;
+                        //Here the content has been read successfuly
+                        console.log(file);
+                        console.log(content);
+                        let data = {
+                            "name": file.name.split(".")[0],
+                            "source_code": content,
+                            "language_code": getKey(file.name.split(".")[1]),
+                            "extention": file.name.split(".")[1],
+                            'user_id': localStorage.getItem("id"),
+                        }
+                        console.log(data)
+                        $.ajax({
+                            url: API_URL + "add_file.php",
+                            type: "post",
+                            dataType: 'json',
+                            data: data,
+                            success: function(response) {
+                                console.log(response);
+                                if (response.status == true) {
+                                    console.log("sukses");
+                                    getAllFile()
+                                }
+                            },
+                            error: function(errormessage) {
+                                console.log(errormessage);
+                            }
+                        });
+                    }
+
+                    reader.readAsText(file);
+                } else {
+                    fileDisplayArea.innerText = "File not supported!"
+                }
+            });
+            fileInput.click();
+
+
+        });
+    });
+}
 
 
 function downloadFile() {

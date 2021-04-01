@@ -20,7 +20,7 @@ include_once("config.php");
         $hasil =  array('pesan' => "Berhasil menambah file baru", 'status' => true);
         echo json_encode($hasil);
     } else {
-        $hasil =  array('pesan' => "Gagal menambah file baru", 'status' => false);
+        $hasil =  array('pesan' => $mysqli->error, 'status' => false);
         echo json_encode($hasil);
     }
 }
