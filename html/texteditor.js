@@ -111,8 +111,7 @@ function getAllFile() {
         }
       },
       error: function (errormessage) {
-        console.log(errormessage.responseJSON);
-        $("#ans").html(errormessage.responseJSON.error);
+        console.log(errormessage);
       }
     });
   });
@@ -239,8 +238,7 @@ function getHistoryFile() {
         }
       },
       error: function (errormessage) {
-        console.log(errormessage.responseJSON);
-        $("#ans").html(errormessage.responseJSON.error);
+        console.log(errormessage);
       }
     });
   });

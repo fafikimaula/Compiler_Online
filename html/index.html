@@ -26,7 +26,7 @@
                     <p class="text-3xl text-blue-600 font-bold hidden md:block group-hover:block">Galaxy</p>
 
                 </div>
-                <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
+                <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative" >
                     <div class="w-10 h-10 relative flex flex-shrink-0">
                         <img id="imageAccount" class="shadow-md rounded-full w-full h-full object-cover"
                             src="" alt="" />
@@ -34,7 +34,7 @@
                     <div class="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
                         <p class="font-bold">Hello, <span id="nameAccount"></span></p>
                     </div>
-                    <div class="bg-blue-700 w-3 h-3 rounded-full flex flex-shrink-0 hidden md:block group-hover:block">
+                    <div class="bg-blue-700 w-3 h-3 rounded-full flex flex-shrink-0 hidden md:block group-hover:block"  @click='localStorage.clear(); console.log("clear"); location.href = "index.html";' x-data="{ }">
                     </div>
                 </div>
 
