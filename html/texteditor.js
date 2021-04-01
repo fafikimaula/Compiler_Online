@@ -3,10 +3,33 @@ const CPP_KEY = "53";
 const PYTHON_KEY = "70";
 const SQL_KEY = "82";
 const NODEJS_KEY = "63";
+
 const BASE_URL = "http://172.25.108.131:8081/submissions";
 //const API_URL = window.location.origin + '/' + window.location.pathname + 'api' + '/';
 const API_URL = "http://localhost/galaxy/html/api/";
 
+function getExtention(key) {
+  switch (key) {
+    case 62:
+      return ".java"
+      break;
+    case 53:
+      return ".c"
+      break;
+    case 70:
+      return ".py"
+      break;
+    case 82:
+      return ".sql"
+      break;
+    case 63:
+      return ".js"
+      break;
+    default:
+      return ".js"
+      break;
+  }
+}
 
 function getMainData() {
   $(document).ready(function () {
@@ -14,8 +37,8 @@ function getMainData() {
     let first_name = localStorage.getItem("first_name");
     let photo = localStorage.getItem("photo");
     console.log("first_name " + first_name);
-    if(id == null){
-      setTimeout("location.href = 'signin.html';",0);
+    if (id == null) {
+      setTimeout("location.href = 'signin.html';", 0);
     } else {
       document.getElementById("nameAccount").innerHTML = first_name
       document.getElementById("imageAccount").src = photo
@@ -40,6 +63,7 @@ function getAllFile() {
           let sourceCode = `${file.source_code}`;
           let fileName = file.name + `.` + file.extention;
           allFileElement.innerHTML += `
+         
           <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\`` + `); document.getElementById("fileOpenName").innerHTML = "` + fileName + `"; document.getElementById("languageSelect").value  = "` + file.language_code + `";' x-data="{ open: false, color: false }"
           @keydown.escape="open = false" @click.away="open = false">
           <div
@@ -57,6 +81,7 @@ function getAllFile() {
                   <h4 class="font-bold">`+ fileName + `</h4>
                   <small class="text-xs"> `+ file.created_at + `</small>
               </div>
+              <div id="idFile" class="hidden">`+ file.id +`</div>
               <div class="relative">
                   <a href="javascript:;" @click="open = !open">
                       <svg fill="currentColor" class="w-5 h-5" style=""
@@ -253,6 +278,7 @@ function codeEditor(lang_id, datainput) {
     $("#runButton").click(function () {
       let code = editor.getValue();
       $("#ans").html("Loading...");
+     
       console.log(code);
       let data = {
         source_code: code,
@@ -293,6 +319,29 @@ function codeEditor(lang_id, datainput) {
             console.log("datainput : " + datainput);
             console.log(response.stdout);
             $("#ans").html(response.stdout);
+            let dataSave = {
+              "name": document.getElementById("fileOpenName").innerHTML,
+              "source_code": code,
+              "language_code": lang_id,
+              "extention": getExtention(lang_id),
+              "id": document.getElementById("idFile").innerHTML,
+            };
+            console.log(dataSave);
+            $.ajax({
+              url: API_URL + "save_file.php",
+              type: "post",
+              dataType: 'json',
+              data: dataSave,
+              success: function (response) {
+                console.log(response)
+                if (response.status == true) {
+                  getAllFile()
+                }
+              },
+              error: function (errormessage) {
+                console.log(errormessage);
+              }
+            });
           },
           error: function (errormessage) {
             console.log(errormessage.responseJSON);
