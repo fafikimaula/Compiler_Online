@@ -245,6 +245,7 @@ function successAlert(message) {
 function createNewFile() {
     $(document).ready(function () {
         $("#createNewFileButton").click(function () {
+            loading()
             let today = new Date();
             let currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
             let data = {
@@ -375,7 +376,6 @@ function getHistoryFile() {
 function codeEditor(lang_id) {
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/dracula");
-    console.log("id" + lang_id)
     $(document).ready(function () {
         $("#runButton").click(function () {
             let code = editor.getValue();
@@ -432,8 +432,8 @@ function codeEditor(lang_id) {
                         let dataSave = {
                             "name": document.getElementById("fileOpenName").innerHTML,
                             "source_code": code,
-                            "language_code": lang_id,
-                            "extention": getExtention(lang_id),
+                            "language_code": document.getElementById("languageSelect").value,
+                            "extention": getExtention(document.getElementById("languageSelect").value),
                             "id": document.getElementById("idOpenFile").innerHTML,
                         };
                         console.log(dataSave);
@@ -493,7 +493,7 @@ function codeEditor(lang_id) {
     }
 
     if (lang_id == CPP_KEY) {
-        let cppcode = `#include < iostream >
+        let cppcode = `#include <iostream >
         using namespace std;
     int main() {
         cout << "Hello World"; \n
@@ -534,6 +534,7 @@ function deleteFile() {
         $("#deleteButton").click(function () {
             let data = { 'id': document.getElementById("idOpenFile").innerHTML };
             console.log("delete file " + data)
+            loading()
             $.ajax({
                 url: "api/delete_file.php",
                 type: "post",
@@ -600,6 +601,7 @@ function uploadFile() {
                     reader.onload = function (e) {
                         var content = reader.result;
                         //Here the content has been read successfuly
+                        console.log("UPLOAD FILE")
                         console.log(file);
                         console.log(content);
                         let data = {
@@ -646,6 +648,7 @@ function uploadFile() {
 function downloadFile() {
     $(document).ready(function () {
         $("#downloadButton").click(function () {
+            loading()
             let fileName = document.getElementById("fileOpenName").innerHTML + document.getElementById("fileOpenExtention").innerHTML;
             let editor = ace.edit("editor");
             let code = editor.getValue();

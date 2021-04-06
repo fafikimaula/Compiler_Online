@@ -14,10 +14,10 @@ include_once("config.php");
     $id = $_POST['id'];
 
     // Insert user data into table
-    $new_file = mysqli_query($mysqli, "UPDATE file set name='$name', source_code='$source_code', language_code='$language_code',extention='$extention' WHERE id='$id'");
+    $new_file = $mysqli->prepare("UPDATE file set name=?, source_code=?, language_code=?,extention=? WHERE id=?");
     //$new_file = mysqli_query($mysqli, "UPDATE file set source_code='$source_code' WHERE id='$id'");
-
-    if ($new_file) {
+    $new_file->bind_param('sssss',$name, $source_code , $language_code, $extention, $id);
+    if ($new_file->execute()) {
         $hasil =  array('pesan' => "Berhasil menyimpan file", 'status' => true);
         echo json_encode($hasil);
     } else {
