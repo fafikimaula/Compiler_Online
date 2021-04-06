@@ -4,7 +4,7 @@ const PYTHON_KEY = "70";
 const SQL_KEY = "82";
 const NODEJS_KEY = "63";
 
-const BASE_URL = "http://172.27.37.93:8081/submissions";
+const BASE_URL = "http://172.27.46.214:8081/submissions";
 //const API_URL = window.location.origin + '/' + window.location.pathname + 'api' + '/';
 const API_URL = "172.27.37.93:8080/";
 
@@ -56,7 +56,7 @@ function getKey(extention) {
 }
 
 function getMainData() {
-    $(document).ready(function() {
+    $(document).ready(function () {
         let id = localStorage.getItem("id");
         let first_name = localStorage.getItem("first_name");
         let photo = localStorage.getItem("photo");
@@ -72,14 +72,14 @@ function getMainData() {
 
 function getAllFile() {
     console.log("trying to get all file, url: ")
-    $(document).ready(function() {
+    $(document).ready(function () {
         let allFileElement = document.getElementById("allFile");
         //$("#ans").html("Loading...");
         $.ajax({
             url: "api/get_file.php",
             type: "get",
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 console.log("all file : " + response);
                 allFileElement.innerHTML = '';
                 for (const file of response) {
@@ -159,16 +159,92 @@ function getAllFile() {
          `;
                 }
             },
-            error: function(errormessage) {
+            error: function (errormessage) {
                 console.log(errormessage);
             }
         });
     });
 }
 
+function loading() {
+    document.getElementById("alert").innerHTML = '';
+    document.getElementById("loading").innerHTML = '';
+    document.getElementById("loading").innerHTML = `
+    <div class="alert flex flex-row items-center bg-red-200 p-5 rounded border-b-2 border-red-300">
+  <div class="alert-icon flex items-center justify-center h-10 w-10 flex-shrink-0 rounded-full">
+    <svg class="animate-spin h-8 w-8 rounded-full bg-transparent border-2 border-transparent border-opacity-50" style="border-right-color: white; border-top-color: white;" viewBox="0 0 24 24"></svg>
+  </div>
+  <div class="alert-content ml-4">
+    <div class="alert-title font-semibold text-lg text-red-800">Processing</div>
+    <div class="alert-description text-sm text-red-600">Tunggu..</div>
+  </div>
+</div>
+`;
+}
+
+function errorAlert(message) {
+    document.getElementById("alert").innerHTML += `
+        <div x-data="{ show: true }" x-show="show" class="alert mb-5 flex flex-row items-center bg-red-200 p-5 rounded border-b-2 border-red-300" >
+    <div class="alert-icon flex items-center bg-red-100 border-2 border-red-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
+				<span class="text-red-500">
+					<svg fill="currentColor"
+						 viewBox="0 0 20 20"
+						 class="h-6 w-6">
+						<path fill-rule="evenodd"
+							  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+							  clip-rule="evenodd"></path>
+					</svg>
+				</span>
+			</div>
+			<div class="alert-content ml-4">
+				<div class="alert-title font-semibold text-lg text-red-800">
+                    Error
+				</div>
+				<div class="alert-description text-sm text-red-600">
+                    `+ message + `
+				</div>
+			</div>
+<button type="button" @click="show = false" class=" text-yellow-700 ml-10" >
+        <span class="text-2xl">&times;</span>
+</button >
+</div >
+        `;
+        document.getElementById("loading").innerHTML = '';
+}
+
+function successAlert(message) {
+    document.getElementById("alert").innerHTML += `
+        <div x-data="{ show: true }" x-show="show" class="alert mb-5 flex flex-row items-center bg-red-200 p-5 rounded border-b-2 border-red-300" >
+    <div class="alert-icon flex items-center bg-green-100 border-2 border-green-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
+				<span class="text-green-500">
+					<svg fill="currentColor"
+						 viewBox="0 0 20 20"
+						 class="h-6 w-6">
+						<path fill-rule="evenodd"
+							  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+							  clip-rule="evenodd"></path>
+					</svg>
+				</span>
+			</div>
+			<div class="alert-content ml-4">
+				<div class="alert-title font-semibold text-lg text-green-800">
+                    Success
+				</div>
+				<div class="alert-description text-sm text-green-600">
+                    `+ message + `
+				</div>
+			</div>
+<button type="button" @click="show = false" class=" text-yellow-700 ml-10" >
+        <span class="text-2xl">&times;</span>
+</button >
+</div >
+        `;
+        document.getElementById("loading").innerHTML = '';
+}
+
 function createNewFile() {
-    $(document).ready(function() {
-        $("#createNewFileButton").click(function() {
+    $(document).ready(function () {
+        $("#createNewFileButton").click(function () {
             let today = new Date();
             let currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
             let data = {
@@ -184,13 +260,15 @@ function createNewFile() {
                 type: "post",
                 dataType: 'json',
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     if (response.status == true) {
                         getAllFile()
+                        successAlert("Berhasil menambahkan file baru")
                     }
                 },
-                error: function(errormessage) {
+                error: function (errormessage) {
                     console.log(errormessage.responseJSON);
+                    errorAlert(errormessage.responseText);
                 }
             });
         });
@@ -201,92 +279,92 @@ function createNewFile() {
 
 function getHistoryFile() {
     console.log("trying to get all history file, url: ")
-    $(document).ready(function() {
+    $(document).ready(function () {
         let allFileElement = document.getElementById("historyFile");
         //$("#ans").html("Loading...");
         $.ajax({
-            url:  "api/get_file.php",
+            url: "api/get_file.php",
             type: "get",
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 console.log("all history file : " + response);
                 allFileElement.innerHTML = '';
                 for (const file of response) {
                     console.log(file);
-                    let sourceCode = `${file.source_code}`;
+                    let sourceCode = `${file.source_code} `;
                     let fileName = file.name + `.` + file.extention;
-                    allFileElement.innerHTML += `
-          <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\`` + `); document.getElementById("fileOpenName").innerHTML = "` + fileName + `"; document.getElementById("languageSelect").value  = "` + file.language_code + `";' x-data="{ open: false, color: false }"
-          @keydown.escape="open = false" @click.away="open = false">
-          <div
-              class="flex items-center bg-gray-800 hover:bg-blue-700 rounded-md p-3 text-white cursor-pointer transition duration-500 ease-in-out hover:shadow hover:bg-indigo-600">
-              <div>
-                  <svg fill="currentColor" class="w-10 h-10" style=""
-                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                      <path
-                          d="M0 4c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4z">
-                      </path>
-                  </svg>
+                    //                 allFileElement.innerHTML += `
+                    //     <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\`` + `); document.getElementById("fileOpenName").innerHTML = "` + fileName + `"; document.getElementById("languageSelect").value  = "` + file.language_code + `";' x - data="{ open: false, color: false }"
+                    // @keydown.escape="open = false" @click.away="open = false" >
+                    //     <div
+                    //         class="flex items-center bg-gray-800 hover:bg-blue-700 rounded-md p-3 text-white cursor-pointer transition duration-500 ease-in-out hover:shadow hover:bg-indigo-600">
+                    //         <div>
+                    //             <svg fill="currentColor" class="w-10 h-10" style=""
+                    //                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    //                 <path
+                    //                     d="M0 4c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4z">
+                    //                 </path>
+                    //             </svg>
 
-              </div>
-              <div class="px-3 mr-auto">
-                  <h4 class="font-bold">` + fileName + `</h4>
-                  <small class="text-xs"> ` + file.created_at + `</small>
-              </div>
-              <div class="relative">
-                  <a href="javascript:;" @click="open = !open">
-                      <svg fill="currentColor" class="w-5 h-5" style=""
-                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                          <path
-                              d="M10 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0-6a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
-                          </path>
-                      </svg>
+                    //         </div>
+                    //         <div class="px-3 mr-auto">
+                    //             <h4 class="font-bold">` + fileName + `</h4>
+                    //             <small class="text-xs"> ` + file.created_at + `</small>
+                    //         </div>
+                    //         <div class="relative">
+                    //             <a href="javascript:;" @click="open = !open">
+                    //                   <svg fill="currentColor" class="w-5 h-5" style=""
+                    //                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    //                 <path
+                    //                     d="M10 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0-6a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
+                    //                 </path>
+                    //             </svg>
 
-                  </a>
+                    //               </a>
 
-                  <div x-show="open" x-transition:enter="transition ease-out duration-100"
-                      x-transition:enter-start="transform opacity-0 scale-95"
-                      x-transition:enter-end="transform opacity-100 scale-100"
-                      x-transition:leave="transition ease-in duration-75"
-                      x-transition:leave-start="transform opacity-100 scale-100"
-                      x-transition:leave-end="transform opacity-0 scale-95"
-                      class="options absolute bg-white text-gray-600 origin-top-right right-0 mt-2 w-56 rounded-md shadow-lg overflow-hidden">
-                      <a href="javascript:;"
-                          class="flex py-3 px-2 text-sm font-bold hover:bg-gray-100 ">
-                          <span class="mr-auto">Edit</span>
-                          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
-                              <path
-                                  d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                              </path>
-                          </svg>
-                      </a>
-                      <a href="javascript:;"
-                          class="flex py-3 px-2 text-sm font-bold hover:bg-gray-100">
-                          <span class="mr-auto">Download</span>
-                          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
-                              <path fill-rule="evenodd"
-                                  d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                                  clip-rule="evenodd"></path>
-                          </svg>
-                      </a>
-                      <a href="javascript:;"
-                          class="flex py-3 px-2 text-sm font-bold bg-red-400 text-white">
-                          <span class="mr-auto">Delete</span>
-                          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
-                              <path fill-rule="evenodd"
-                                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                  clip-rule="evenodd"></path>
-                          </svg>
+                    //         <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                    //             x-transition:enter-start="transform opacity-0 scale-95"
+                    //             x-transition:enter-end="transform opacity-100 scale-100"
+                    //             x-transition:leave="transition ease-in duration-75"
+                    //             x-transition:leave-start="transform opacity-100 scale-100"
+                    //             x-transition:leave-end="transform opacity-0 scale-95"
+                    //             class="options absolute bg-white text-gray-600 origin-top-right right-0 mt-2 w-56 rounded-md shadow-lg overflow-hidden">
+                    //             <a href="javascript:;"
+                    //                 class="flex py-3 px-2 text-sm font-bold hover:bg-gray-100 ">
+                    //                 <span class="mr-auto">Edit</span>
+                    //                 <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
+                    //                     <path
+                    //                         d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                    //                     </path>
+                    //                 </svg>
+                    //             </a>
+                    //             <a href="javascript:;"
+                    //                 class="flex py-3 px-2 text-sm font-bold hover:bg-gray-100">
+                    //                 <span class="mr-auto">Download</span>
+                    //                 <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
+                    //                     <path fill-rule="evenodd"
+                    //                         d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                    //                         clip-rule="evenodd"></path>
+                    //                 </svg>
+                    //             </a>
+                    //             <a href="javascript:;"
+                    //                 class="flex py-3 px-2 text-sm font-bold bg-red-400 text-white">
+                    //                 <span class="mr-auto">Delete</span>
+                    //                 <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
+                    //                     <path fill-rule="evenodd"
+                    //                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                    //                         clip-rule="evenodd"></path>
+                    //                 </svg>
 
-                      </a>
-                  </div>
-              </div>
-          </div>
-      </div>
-         `;
+                    //             </a>
+                    //         </div>
+                    //     </div>
+                    //       </div >
+                    //   </div >
+                    //     `;
                 }
             },
-            error: function(errormessage) {
+            error: function (errormessage) {
                 console.log(errormessage);
             }
         });
@@ -298,16 +376,16 @@ function codeEditor(lang_id) {
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/dracula");
     console.log("id" + lang_id)
-    $(document).ready(function() {
-        $("#runButton").click(function() {
+    $(document).ready(function () {
+        $("#runButton").click(function () {
             let code = editor.getValue();
             $("#ans").html("Loading...");
-
+            loading();
             console.log(code);
             let data = {
                 stdin: document.getElementById("inputCode").value,
                 source_code: code,
-                language_id: lang_id,
+                language_id: document.getElementById("languageSelect").value,
                 number_of_runs: "1",
                 expected_output: null,
                 cpu_time_limit: "2",
@@ -325,11 +403,15 @@ function codeEditor(lang_id) {
                 url: BASE_URL,
                 type: "post",
                 data: data,
+                error: function (errormessage) {
+                    console.log(errormessage);
+                    errorAlert(errormessage.responseText);
+                }
             });
 
             const delay = (ms) => new Promise((res) => setTimeout(res, ms));
             // Callback handler that will be called on success
-            request.done(async function(response, textStatus, jqXHR) {
+            request.done(async function (response, textStatus, jqXHR) {
                 // Log a message to the console
                 console.log("Hooray, it worked!");
                 let token = response.token;
@@ -338,9 +420,15 @@ function codeEditor(lang_id) {
                 let second_request = $.ajax({
                     url: BASE_URL + "/" + token,
                     type: "get",
-                    success: function(response) {
-                        console.log(response.stdout);
+                    success: function (response) {
+                        console.log(response);
                         $("#ans").html(response.stdout);
+                        if (response.stdout) {
+                            successAlert("Program berhasil dijalankan");
+                        } else {
+                            errorAlert(response.stderr);
+                        }
+
                         let dataSave = {
                             "name": document.getElementById("fileOpenName").innerHTML,
                             "source_code": code,
@@ -354,20 +442,25 @@ function codeEditor(lang_id) {
                             type: "post",
                             dataType: 'json',
                             data: dataSave,
-                            success: function(response) {
+                            success: function (response) {
                                 console.log(response)
                                 if (response.status == true) {
                                     getAllFile()
+                                    successAlert("Berhasil menyimpan file")
+                                } else {
+                                    errorAlert(response.pesan)
                                 }
+                                
                             },
-                            error: function(errormessage) {
+                            error: function (errormessage) {
                                 console.log(errormessage);
+                                errorAlert(errormessage.responseText)
                             }
                         });
                     },
-                    error: function(errormessage) {
+                    error: function (errormessage) {
                         console.log(errormessage.responseJSON);
-                        $("#ans").html(errormessage.responseJSON.error);
+                        errorAlert(errormessage.responseJSON);
                     }
                 });
                 // second_request.done(function (response) {
@@ -385,26 +478,26 @@ function codeEditor(lang_id) {
     });
     if (lang_id == PYTHON_KEY)
         editor.setValue("def execute(): \n\t for i in range(10):\n\t\t print i \nexecute()")
-        //java
+    //java
 
     if (lang_id == JAVA_KEY) {
 
-        let javacode = `public class Main{
-  public static void main(String args[]){
-    System.out.println("hello");
-  }
-}
-`;
+        let javacode = `public class Main {
+        public static void main(String args[]) {
+            System.out.println("hello");
+        }
+    }
+    `;
 
         editor.setValue(javacode)
     }
 
     if (lang_id == CPP_KEY) {
-        let cppcode = `#include <iostream>
-using namespace std;
-  int main() {
-      cout<<"Hello World"; \n
-}`
+        let cppcode = `#include < iostream >
+        using namespace std;
+    int main() {
+        cout << "Hello World"; \n
+    } `
         editor.setValue(cppcode)
     }
 
@@ -413,17 +506,17 @@ using namespace std;
 
     /* Create a table called NAMES */
     CREATE TABLE NAMES(Id integer PRIMARY KEY, Name text);
-    
+
     /* Create few records in this table */
-    INSERT INTO NAMES VALUES(1,'Tom');
-    INSERT INTO NAMES VALUES(2,'Lucy');
-    INSERT INTO NAMES VALUES(3,'Frank');
-    INSERT INTO NAMES VALUES(4,'Jane');
-    INSERT INTO NAMES VALUES(5,'Robert');
+    INSERT INTO NAMES VALUES(1, 'Tom');
+    INSERT INTO NAMES VALUES(2, 'Lucy');
+    INSERT INTO NAMES VALUES(3, 'Frank');
+    INSERT INTO NAMES VALUES(4, 'Jane');
+    INSERT INTO NAMES VALUES(5, 'Robert');
     COMMIT;
-    
+
     /* Display all the records from the table */
-    SELECT * FROM NAMES;`
+    SELECT * FROM NAMES; `
 
         editor.setValue(sqlcode)
     }
@@ -437,22 +530,25 @@ using namespace std;
 }
 
 function deleteFile() {
-    $(document).ready(function() {
-        $("#deleteButton").click(function() {
+    $(document).ready(function () {
+        $("#deleteButton").click(function () {
             let data = { 'id': document.getElementById("idOpenFile").innerHTML };
             console.log("delete file " + data)
             $.ajax({
-                url:  "api/delete_file.php",
+                url: "api/delete_file.php",
                 type: "post",
                 dataType: 'json',
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     if (response.status == true) {
                         getAllFile()
+                        successAlert("Berhasil menghapus file")
                     }
                 },
-                error: function(errormessage) {
+                error: function (errormessage) {
                     console.log(errormessage.responseJSON);
+                    errorAlert(errormessage.responseText);
+                    
                 }
             });
         });
@@ -461,8 +557,8 @@ function deleteFile() {
 
 
 function printFile() {
-    $(document).ready(function() {
-        $("#printButton").click(function() {
+    $(document).ready(function () {
+        $("#printButton").click(function () {
             let fileName = document.getElementById("fileOpenName").innerHTML + document.getElementById("fileOpenExtention").innerHTML;
             let editor = ace.edit("editor");
             let code = editor.getValue();
@@ -482,8 +578,8 @@ function printFile() {
 }
 
 function uploadFile() {
-    $(document).ready(function() {
-        $("#uploadFileButton").click(function() {
+    $(document).ready(function () {
+        $("#uploadFileButton").click(function () {
             let fileName = document.getElementById("fileOpenName").innerHTML + document.getElementById("fileOpenExtention").innerHTML;
             let editor = ace.edit("editor");
             let code = editor.getValue();
@@ -494,14 +590,14 @@ function uploadFile() {
             fileInput.accept = ".java,.c,.py";
 
             // (cancel will not trigger 'change')
-            fileInput.addEventListener('change', function(ev2) {
+            fileInput.addEventListener('change', function (ev2) {
                 var file = fileInput.files[0];
                 var textType = /text.*/;
 
                 if (file.type.match(textType)) {
                     var reader = new FileReader();
 
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         var content = reader.result;
                         //Here the content has been read successfuly
                         console.log(file);
@@ -515,19 +611,21 @@ function uploadFile() {
                         }
                         console.log(data)
                         $.ajax({
-                            url:  "api/add_file.php",
+                            url: "api/add_file.php",
                             type: "post",
                             dataType: 'json',
                             data: data,
-                            success: function(response) {
+                            success: function (response) {
                                 console.log(response);
                                 if (response.status == true) {
                                     console.log("sukses");
-                                    getAllFile()
+                                    getAllFile();
+                                    successAlert("Berhasil mengupload file baru");
                                 }
                             },
-                            error: function(errormessage) {
+                            error: function (errormessage) {
                                 console.log(errormessage);
+                                errorAlert(errormessage.responseText)
                             }
                         });
                     }
@@ -546,14 +644,15 @@ function uploadFile() {
 
 
 function downloadFile() {
-    $(document).ready(function() {
-        $("#downloadButton").click(function() {
+    $(document).ready(function () {
+        $("#downloadButton").click(function () {
             let fileName = document.getElementById("fileOpenName").innerHTML + document.getElementById("fileOpenExtention").innerHTML;
             let editor = ace.edit("editor");
             let code = editor.getValue();
             console.log("download file" + fileName)
 
             download(fileName, code);
+            successAlert("Berhasil mendownload file");
         });
     });
 }

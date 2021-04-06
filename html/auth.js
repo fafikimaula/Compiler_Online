@@ -6,7 +6,7 @@ function getMainData() {
         let id = localStorage.getItem("id");
         console.log(id);
         if (id != null) {
-            setTimeout("location.href = 'code.html';", 0);
+            setTimeout("location.href = 'index.html';", 0);
         } 
     });
 }
@@ -38,7 +38,7 @@ function signup() {
                         } else {
                             localStorage.setItem("photo", response.photo);
                         }
-                        setTimeout("location.href = 'code.html';", 1000);
+                        setTimeout("location.href = 'index.html';", 1000);
                     }
                 },
                 error: function (errormessage) {
@@ -76,7 +76,7 @@ function signin() {
                         } else {
                             localStorage.setItem("photo", response.photo);
                         }
-                        setTimeout("location.href = 'code.html';", 1000);
+                        setTimeout("location.href = 'index.html';", 1000);
                     }
                 },
                 error: function (errormessage) {

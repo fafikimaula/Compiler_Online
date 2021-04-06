@@ -1,217 +1,510 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" dir="ltr">
 
-<head>
-    <meta charset="utf-8" />
-    <title>Home Page</title>
-    <link href="https://unpkg.com/tailwindcss@1.4.6/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine-ie11.min.js" defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="assets/ace/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-
-<body class="h-screen overflow-hidden flex items-center justify-center" style="background: #edf2f7;">
-    <!-- Galaxy -->
-    <div class="h-screen w-full flex antialiased text-gray-200 bg-gray-900 overflow-hidden">
-        <div class="flex-1 flex flex-col">
-            <div class="border-b-2 border-gray-800 p-2 flex justify-between flex-row z-20">
-                <!-- <div class="bg-red-600 w-3 h-3 rounded-full mr-2"></div>
-              <div class="bg-yellow-500 w-3 h-3 rounded-full mr-2"></div>
-              <div class="bg-green-500 w-3 h-3 rounded-full mr-2"></div> -->
-                <div class="header p-2 flex flex-row justify-between items-center flex-none">
-                    <!-- <div class="w-16 h-16 relative flex flex-shrink-0" style="filter: invert(100%);">
-                      <img class="rounded-full w-full h-full object-cover" alt="ravisankarchinnam" src="https://avatars3.githubusercontent.com/u/22351907?s=60" />
-                  </div> -->
-                    <p class="text-3xl text-blue-600 font-bold hidden md:block group-hover:block">Galaxy</p>
-
-                </div>
-                <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-                    <div class="w-10 h-10 relative flex flex-shrink-0">
-                        <img id="imageAccount" class="shadow-md rounded-full w-full h-full object-cover" src="" alt="" />
-                    </div>
-                    <div class="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
-                        <p class="font-bold">Hello, <span id="nameAccount"></span></p>
-                    </div>
-                    <div class="bg-blue-700 w-3 h-3 rounded-full flex flex-shrink-0 hidden md:block group-hover:block" @click='localStorage.clear(); console.log("clear"); location.href = "index.html";' x-data="{ }">
-                    </div>
-                </div>
-
-            </div>
-            <main class="flex-grow flex flex-row min-h-0">
-                <section class="flex flex-col flex-none overflow-auto w-24 group lg:w-1/5 md:w-2/5 transition-all duration-300 ease-in-out ">
-
-                    <div class="search-box mt-2 p-2 flex-none">
-                        <form onsubmit="">
-                            <div class="relative">
-                                <label>
-                                    <input
-                                        class="rounded-md py-2 pr-6 pl-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in"
-                                        type="text" value="" placeholder="Search File" />
-                                    <span class="absolute top-0 left-0 mt-2 ml-3 inline-block">
-                                        <svg viewBox="0 0 24 24" class="w-6 h-6">
-                                            <path fill="#bbb"
-                                                d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
-                                        </svg>
-                                    </span>
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div id="allFile" class="contacts p-2 flex-1 overflow-y-scroll">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-                    </div>
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Galaxy | Online Compiler</title>
 
-                    <div class=" mt-2  p-2 flex-none" id="uploadFileButton">
-                        <button class="w-full content-center text-white px-4 w-auto h-10 bg-blue-700 rounded-md hover:bg-blue-800 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
-                            <span class="inline-block material-icons align-top" >
-                                upload
-                            </span>
-                            <span class="inline-block">Upload Your File</span>
 
-                    </div>
-                    <div class="  mb-2 p-2 flex-none" id="createNewFileButton">
-                        <button
-                            class="w-full text-white px-4 w-auto h-10 bg-blue-700 rounded-md hover:bg-blue-800 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
-                            <svg viewBox="0 0 24 24" enable-background="new 0 0 24 24" class="w-8 h-8 inline-block">
-                                <path fill="#FFFFFF" d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
-                                          C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
-                                          C15.952,9,16,9.447,16,10z" />
-                                <span>Add New File</span>
-                            </svg>
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicons/favicon.ico">
+    <link rel="manifest" href="assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
 
-                    </div>
 
-                </section>
-                <section id="containerCode" class="flex flex-col flex-auto border-r border-l border-gray-800">
-                    <div class="chat-header px-6 py-4 flex flex-row flex-none justify-between items-center shadow">
-                        <div class="flex">
-                            <div class="text-xl inline-flex">
-                                <div id="idOpenFile" class="hidden"></div>
-                                <span id="fileOpenName"
-                                    class="flex-1 font-bold rounded-md py-2 px-2 border border-none focus:border-gray-800 bg-gray-900 focus:bg-gray-700 outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in"
-                                    type="text" value="" placeholder="Name File" contenteditable></span>
-                                <p id="fileOpenExtention" class="flex-1 font-bold py-2 px-0"></p>
-                                <p></p>
-                            </div>
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link href="assets/css/theme.css" rel="stylesheet" />
 
-                        </div>
+  </head>
 
-                        <div class="flex justify-end items-center">
 
-                            <button id="downloadButton" class="material-icons mr-5">
-                                cloud_download
-                            </button>
-                        <button id="printButton" class="material-icons mr-5">
-                                print
-                            </button>
-                        <button id="deleteButton" class="material-icons mr-5">
-                                delete
-                            </button>
-                        <div class="dropdown inline-block relative">
-                            <select id="languageSelect" class="bg-gray-700 text-white font-semibold py-2 px-4 rounded inline-flex items-center" onchange="onSelectChange(this.value.trim())">
-                                    <option value="53">C++</option>
-                                    <option value="62">Java</option>
-                                    <option value="70">Python</option>
-                                    <option value="82">SQL</option>
-                                    <option value="63">Java Script</option>
-                                </select>
-                        </div>
-                    </div>
+  <body>
 
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><a class="navbar-brand" href="#"><img class="img-fluid" src="assets/img/icons/logo.png" alt="" /></a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto ms-lg-4 ms-xl-7 border-bottom border-lg-bottom-0 pt-2 pt-lg-0">
+              <li class="nav-item"><a class="nav-link fw-bold active" aria-current="page" href="index.html">About</a></li>
+              <li class="nav-item"><a class="nav-link fw-medium" href="fitur.html">Features</a></li>
+              <li class="nav-item"><a class="nav-link fw-medium" href="code.html">New Code</a></li>
+              
+            </ul>
+            <form class="d-flex py-3 py-lg-0"><a class="btn btn-light rounded-pill shadow fw-bold" href="signin.html" role="button">Login
+                <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                </svg></a></form>
+          </div>
         </div>
-        <div class="overflow-y-scroll h-full">
-            <div id="editorContainer">
-                <pre id="editor" class="rounded-md m-2"> </pre>
-            </div>
-            <div class="flex-none">
-                <div class="flex flex-row items-center p-2">
+      </nav>
 
-                    <div class="relative flex-grow">
-                        <label>
-                                        <input
-                                            class="rounded-full py-2 pl-3 pr-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in"
-                                            type="text" value="" placeholder="Input" />
-                                        <button type="button"
-                                            class="absolute top-0 right-0 mt-2 mr-3 flex flex-shrink-0 focus:outline-none block text-blue-600 hover:text-blue-700 w-6 h-6">
 
-                                        </button>
-                                    </label>
-                    </div>
-                    <button type="button" id="runButton" class="flex flex-shrink-0 focus:outline-none mx-2 block text-blue-600 hover:text-blue-700 w-6 h-6">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26"
-                                        class="w-full h-full fill-current">
-                                        <polygon class="play-btn__svg"
-                                            points="9.33 6.69 9.33 19.39 19.3 13.04 9.33 6.69" />
-                                        <path class="play-btn__svg"
-                                            d="M26,13A13,13,0,1,1,13,0,13,13,0,0,1,26,13ZM13,2.18A10.89,10.89,0,1,0,23.84,13.06,10.89,10.89,0,0,0,13,2.18Z" />
-                                    </svg>
-                                </button>
-                </div>
-            </div>
-            <div class="p-2 h-full">
-                <div class="rounded-md pr-10 w-full h-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in">
-                    <span>
-                                    <pre id="ans">
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-5">
 
-                                    </pre>
-                                </span>
-                </div>
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-5 col-lg-7 order-md-1 pt-8"><img class="img-fluid" src="assets/img/illustrations/hero-header.png" alt="" /></div>
+            <div class="col-md-7 col-lg-5 text-center text-md-start pt-5 pt-md-9">
+              <h1 class="mb-4 display-2 fw-bold">Save your code 
+                <br class="d-block d-lg-none d-xl-block" />program here.</h1>
+              <p class="mt-3 mb-4">Galaxy is online editor and compiler 
+                <br>where you can write and run code instantly. 
+                <br>Whenever you come up with new idea, 
+                <br>learn or teach programming, 
+                <br>you and others can just write and run code
+              </p><a class="btn btn-lg btn-info rounded-pill" href="code.html" role="button">Try for New Code</a>
             </div>
+          </div>
         </div>
+        <!-- end of .container-->
 
-        </section>
-        <section class="flex flex-col flex-none overflow-auto w-24 group lg:w-1/5 md:w-2/5 transition-all duration-300 ease-in-out ">
-            <div class="header p-4 flex flex-row justify-between items-center flex-none ">
-                <!-- <div class="w-16 h-16 relative flex flex-shrink-0 " style="filter: invert(100%); ">
-                          <img class="rounded-full w-full h-full object-cover " alt="ravisankarchinnam " src="https://avatars3.githubusercontent.com/u/22351907?s=60 " />
-                      </div> -->
-                <p class="text-xl font-bold hidden md:block group-hover:block ">Recent Code History</p>
-                <!-- <a href="# " class="block rounded-full hover:bg-gray-700 bg-gray-800 w-10 h-10 p-2 hidden md:block group-hover:block ">
-                          <svg viewBox="0 0 24 24 " class="w-full h-full fill-current ">
-                          <path
-                                  d="M6.3 12.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H7a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM8 16h2.59l9-9L17 4.41l-9 9V16zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h6a1
-            1 0 0 1 0 2H4v14h14v-6z "/>
-                      </svg>
-                      </a> -->
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-4">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div class="card mb-3 bg-soft-danger rounded-3">
+                <div class="row g-0 align-items-center">
+                  <div class="col-md-5 col-lg-6 text-md-center"><img class="img-fluid" src="assets/img/illustrations/about.png" alt="" /></div>
+                  <div class="col-md-7 col-lg-6 px-md-2 px-xl-6 text-center text-md-start">
+                    <div class="card-body px-4 py-5 p-lg-3 p-md-4">
+                      <h1 class="mb-4 fw-bold">We are a high-level 
+                        <br class="d-md-none d-xxl-block" />online compiler</h1>
+                      <p class="card-text">The place to compile various code programming that you can access at anytime
+                        <br class="d-none d-xxl-block" />through the internet and where you can carry it.
+                        <br class="d-none d-xxl-block" />This very flexible compiler area has a high level of security. 
+                        <br class="d-none d-xxl-block" />To enter into your own account in galaxy you must enter the password 
+                        <br class="d-none d-xxl-block" />that you created when you registered in this website. 
+                        </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+        <!-- end of .container-->
 
-            <div id="historyFile" class="p-2 flex-1 overflow-y-scroll ">
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
 
 
+      <section class="py-6">
+        <div class="container-lg">
+          <div class="row flex-center mb-5">
+            <div class="col-auto text-center my-4">
+              <h1 class="mb-4 fw-bold">Features</h1>
+              <p>Some of the features and advantages that we provide for those of you <br />who compile code program in this website.</p>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="card px-5 px-md-3 py-lg-5">
+                <div class="row flex-center">
+                  <div class="bg-holder z-index-1 d-none d-lg-block" style="background-image:url(assets/img/illustrations/feature-bg-1.png);background-position:center;background-size:contain;">
+                  </div>
+                  <!--/.bg-holder-->
 
-        </section>
-        </main>
-    </div>
-    </div>
-</body>
+                  <div class="bg-holder z-index-1 d-block d-lg-none" style="background-image:url(assets/img/illustrations/feature-bg-1.png);background-position:center;background-size:cover;">
+                  </div>
+                  <!--/.bg-holder-->
 
-<script type="text/javascript " src="assets/js/main.js "></script>
-<script src="texteditor.js "></script>
-<script>
-    function onSelectChange(selectedVal) {
+                  <div class="col-md-4 pe-0 pe-md-0 text-center"><img class="img-fluid" src="assets/img/illustrations/feature-search.png" alt="" /></div>
+                  <div class="col-md-8 ps-md-3 pe-md-2 text-center text-md-start z-index-2">
+                    <div class="card-body px-0">
+                      <h4 class="card-title pt-md-5">Search File</h4>
+                      <p class="mb-0">Don’t worry if your code program is very 
+                        <br class="d-none d-lg-block"> much, the Galaxy | Online Compiler 
+                        <br class="d-none d-lg-block"> provides a search engine, 
+                        <br class="d-none d-lg-block"> which is useful for making it 
+                        <br class="d-none d-lg-block"> easier to find file effectively
+                        <br class="d-none d-lg-block">saving time. </p>
+                      <div><a class="btn btn-lg ps-0 pe-3" href="#" role="button">Learn more</a>
+                        <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="card px-5 px-md-3 py-lg-5">
+                <div class="row flex-center">
+                  <div class="bg-holder z-index-1 d-none d-lg-block" style="background-image:url(assets/img/illustrations/feature-bg-2.png);background-position:center;background-size:contain;">
+                  </div>
+                  <!--/.bg-holder-->
 
-        console.log(selectedVal)
-        if (selectedVal != undefined && selectedVal != null && selectedVal != " ") {
-            $("#runButton").off('click');
-            codeEditor(selectedVal)
-        }
-    }
-    window.onload = function() {
-        getMainData()
-        codeEditor();
-        getAllFile();
-        getHistoryFile();
-        createNewFile();
-        downloadFile();
-        deleteFile();
-        printFile();
-        uploadFile();
-    };
-</script>
+                  <div class="bg-holder z-index-1 d-block d-lg-none" style="background-image:url(assets/img/illustrations/feature-bg-2.png);background-position:center;background-size:cover;">
+                  </div>
+                  <!--/.bg-holder-->
+
+                  <div class="col-md-4 pe-0 pe-md-0 text-center"><img class="img-fluid" src="assets/img/illustrations/feature-hour.png" alt="" /></div>
+                  <div class="col-md-8 ps-md-3 pe-md-2 text-center text-md-start z-index-2">
+                    <div class="card-body px-0">
+                      <h4 class="card-title pt-md-5">Accessibility </h4>
+                      <p class="mb-0">This software is available on premises or as cloud based. If you choose to use the cloud, 
+                        <br>the solution will be accessible to you and 
+                        <br>your friends anytime and anywhere 
+                        <br>as long as an internet connection is available. 
+                        <br>This greatly increases the scope within which you can structure your programs and access them easily </p>
+                      <div><a class="btn btn-lg ps-0 pe-3" href="#" role="button">Learn more</a>
+                        <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="card px-5 px-md-3 py-lg-5">
+                <div class="row flex-center">
+                  <div class="bg-holder z-index-1 d-none d-lg-block" style="background-image:url(assets/img/illustrations/feature-bg-3.png);background-position:center;background-size:contain;">
+                  </div>
+                  <!--/.bg-holder-->
+
+                  <div class="bg-holder z-index-1 d-block d-lg-none" style="background-image:url(assets/img/illustrations/feature-bg-3.png);background-position:center;background-size:cover;">
+                  </div>
+                  <!--/.bg-holder-->
+
+                  <div class="col-md-4 pe-0 pe-md-0 text-center"><img class="img-fluid" src="assets/img/illustrations/feature-print.png" alt="" /></div>
+                  <div class="col-md-8 ps-md-3 pe-md-2 text-center text-md-start z-index-2">
+                    <div class="card-body px-0">
+                      <h4 class="card-title pt-md-5">Print Out</h4>
+                      <p class="mb-0">Don't worry if you want 
+                        <br>your program files to print. 
+                        <br>The Galaxy | Online Compiler website has provided a print feature 
+                        <br>that can be used very much
+                        easy, </p>
+                      <div><a class="btn btn-lg ps-0 pe-3" href="#" role="button">Learn more</a>
+                        <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="card px-5 px-md-3 py-lg-5">
+                <div class="row flex-center">
+                  <div class="bg-holder z-index-1 d-none d-lg-block" style="background-image:url(assets/img/illustrations/feature-bg-4.png);background-position:center;background-size:contain;">
+                  </div>
+                  <!--/.bg-holder-->
+
+                  <div class="bg-holder z-index-1 d-block d-lg-none" style="background-image:url(assets/img/illustrations/feature-bg-4.png);background-position:center;background-size:cover;">
+                  </div>
+                  <!--/.bg-holder-->
+
+                  <div class="col-md-4 pe-0 pe-md-0 text-center"><img class="img-fluid" src="assets/img/illustrations/feature-security.png" alt="" /></div>
+                  <div class="col-md-8 ps-md-3 pe-md-2 text-center text-md-start z-index-2">
+                    <div class="card-body px-0">
+                      <h4 class="card-title pt-md-5">Cloud Based</h4>
+                      <p class="mb-0">As a cloud-based solution, 
+                        <br>it is easy for your friends to collaborate 
+                        <br>and access and compile together program  
+                        <br>files that are created whether they are 
+                        <br>in the same or different places. </p>
+                      <div><a class="btn btn-lg ps-0 pe-3" href="#" role="button">Learn more</a>
+                        <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-5">
+        <div class="container-lg bg-info p-5 p-md-5 p-xl-7 rounded-3">
+          <div class="row flex-center">
+            <div class="col-12">
+              <h2 class="text-light fw-bold">Testimonials</h2>
+            </div>
+          </div>
+          <div class="carousel slide pt-6" id="carouselExampleDark" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="10000">
+                <div class="row h-100">
+                  <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card h-100 py-3">
+                      <div class="card-body my-2">
+                        <div class="d-flex align-items-center"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/1.png" width="70" alt="" />
+                          <div class="flex-1 align-items-center">
+                            <h6 class="mb-0 fs--1 text-1000 fw-medium">John Fang </h6>
+                            <p class="fs--2 fw-normal text-info mb-0">wordfaang.com</p>
+                          </div>
+                        </div>
+                        <p class="card-text ps-7 ps-md-0 ps-xl-7 pt-md-4 pt-lg-3 pt-xl-0">“Wow...I am very happy to use this VPN, it turned out to be more than my expectations and so far there have been no problems. LaslesVPN always the best”.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card h-100 py-3">
+                      <div class="card-body my-2">
+                        <div class="d-flex align-items-center"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/2.png" width="70" alt="" />
+                          <div class="flex-1 align-items-center">
+                            <h6 class="mb-0 fs--1 text-1000 fw-medium">Jeny Doe</h6>
+                            <p class="fs--2 fw-normal text-info mb-0">UX Engineer</p>
+                          </div>
+                        </div>
+                        <p class="card-text ps-7 ps-md-0 ps-xl-7 pt-md-4 pt-lg-3 pt-xl-0">“I like it because I like to travel far and still can connect with high speed.”</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card h-100 py-3">
+                      <div class="card-body my-2">
+                        <div class="d-flex align-items-center"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/3.png" width="70" alt="" />
+                          <div class="flex-1 align-items-center">
+                            <h6 class="mb-0 fs--1 text-1000 fw-medium">William</h6>
+                            <p class="fs--2 fw-normal text-info mb-0">Web Designer</p>
+                          </div>
+                        </div>
+                        <p class="card-text ps-7 ps-md-0 ps-xl-7 pt-md-4 pt-lg-3 pt-xl-0">“I like it because I like to travel far and still can connect with high speed.”</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <div class="row h-100">
+                  <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card h-100 py-3">
+                      <div class="card-body my-2">
+                        <div class="d-flex align-items-center"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/1.png" width="70" alt="" />
+                          <div class="flex-1 align-items-center">
+                            <h6 class="mb-0 fs--1 text-1000 fw-medium">Viezh Robert</h6>
+                            <p class="fs--2 fw-normal text-info mb-0">arsaw, Poland</p>
+                          </div>
+                        </div>
+                        <p class="card-text ps-7 ps-md-0 ps-xl-7 pt-md-4 pt-lg-3 pt-xl-0">“Wow...I am very happy to use this VPN, it turned out to be more than my expectations and so far there have been no problems. LaslesVPN always the best”.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card h-100 py-3">
+                      <div class="card-body my-2">
+                        <div class="d-flex align-items-center"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/2.png" width="70" alt="" />
+                          <div class="flex-1 align-items-center">
+                            <h6 class="mb-0 fs--1 text-1000 fw-medium">Kim Young Jou</h6>
+                            <p class="fs--2 fw-normal text-info mb-0">UX Engineer</p>
+                          </div>
+                        </div>
+                        <p class="card-text ps-7 ps-md-0 ps-xl-7 pt-md-4 pt-lg-3 pt-xl-0">“I like it because I like to travel far and still can connect with high speed.”</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card h-100 py-3">
+                      <div class="card-body my-2">
+                        <div class="d-flex align-items-center"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/3.png" width="70" alt="" />
+                          <div class="flex-1 align-items-center">
+                            <h6 class="mb-0 fs--1 text-1000 fw-medium">Kim Young Jou</h6>
+                            <p class="fs--2 fw-normal text-info mb-0">Web Designer</p>
+                          </div>
+                        </div>
+                        <p class="card-text ps-7 ps-md-0 ps-xl-7 pt-md-4 pt-lg-3 pt-xl-0">“I like it because I like to travel far and still can connect with high speed.”</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="row h-100">
+                  <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card h-100 py-3">
+                      <div class="card-body my-2">
+                        <div class="d-flex align-items-center"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/1.png" width="70" alt="" />
+                          <div class="flex-1 align-items-center">
+                            <h6 class="mb-0 fs--1 text-1000 fw-medium">Viezh Robert</h6>
+                            <p class="fs--2 fw-normal text-info mb-0">arsaw, Poland</p>
+                          </div>
+                        </div>
+                        <p class="card-text ps-7 ps-md-0 ps-xl-7 pt-md-4 pt-lg-3 pt-xl-0">“Wow...I am very happy to use this VPN, it turned out to be more than my expectations and so far there have been no problems. LaslesVPN always the best”.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card h-100 py-3">
+                      <div class="card-body my-2">
+                        <div class="d-flex align-items-center"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/2.png" width="70" alt="" />
+                          <div class="flex-1 align-items-center">
+                            <h6 class="mb-0 fs--1 text-1000 fw-medium">Kim Young Jou</h6>
+                            <p class="fs--2 fw-normal text-info mb-0">UX Engineer</p>
+                          </div>
+                        </div>
+                        <p class="card-text ps-7 ps-md-0 ps-xl-7 pt-md-4 pt-lg-3 pt-xl-0">“I like it because I like to travel far and still can connect with high speed.”</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card h-100 py-3">
+                      <div class="card-body my-2">
+                        <div class="d-flex align-items-center"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/3.png" width="70" alt="" />
+                          <div class="flex-1 align-items-center">
+                            <h6 class="mb-0 fs--1 text-1000 fw-medium">Kim Young Jou</h6>
+                            <p class="fs--2 fw-normal text-info mb-0">Web Designer</p>
+                          </div>
+                        </div>
+                        <p class="card-text ps-7 ps-md-0 ps-xl-7 pt-md-4 pt-lg-3 pt-xl-0">“I like it because I like to travel far and still can connect with high speed.”</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row px-3 px-md-0 mt-4">
+              <div class="col-6 position-relative">
+                <ol class="carousel-indicators">
+                  <li class="active" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"></li>
+                  <li data-bs-target="#carouselExampleDark" data-bs-slide-to="1"></li>
+                  <li data-bs-target="#carouselExampleDark" data-bs-slide-to="2"></li>
+                </ol>
+              </div>
+              <div class="col-6 position-relative"><a class="carousel-control-prev carousel-icon z-index-2" href="#carouselExampleDark" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></a><a class="carousel-control-next carousel-icon z-index-2" href="#carouselExampleDark" role="button" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-6 pb-0">
+
+        <div class="container">
+          <hr class="text-info opacity-25" />
+          <div class="row py-7 justify-content-sm-between text-center text-md-start">
+            <div class="col-md-6">
+              <h1 class="fw-bold">Try for free!</h1>
+              <p>Get unlimited free to use our features!</p>
+            </div>
+            <div class="col-md-6 text-lg-end"><a class="btn btn-lg btn-danger rounded-pill me-4 me-md-3 me-lg-4" href="#" role="button">Learn more</a><a class="btn btn-light rounded-pill shadow fw-bold" href="#" role="button">Try New Code
+                <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                </svg></a></div>
+          </div>
+          <div class="row justify-content-lg-around">
+            <div class="col-12 col-sm-12 col-lg-3 mb-4 order-0 order-sm-0"><a class="text-decoration-none" href="#"><img class="img-fluid me-3" src="assets/img/icons/logo.png" alt="" /><span class="fw-bold fs-1 text-1000">Galaxy | Online Compiler</span></a>
+              <p class="mt-4">Warehouse Society, 234 <br />Bahagia Ave Street PRBW 29281</p>
+              <p>info@warehouse.project<br />1-232-3434 (Main) </p>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-3 mb-3 order-2 order-sm-1">
+              <h6 class="lh-lg fw-bold mb-4">About</h6>
+              <ul class="list-unstyled mb-md-4 mb-lg-0">
+                <li class="lh-lg"><a class="text-dark fs--1 text-decoration-none" href="#!">Profile</a></li>
+                <li class="lh-lg"><a class="text-dark fs--1 text-decoration-none" href="#!">Features</a></li>
+                <li class="lh-lg"><a class="text-dark fs--1 text-decoration-none" href="#!">Testimonials</a></li>
+                
+              </ul>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-3 mb-3 order-3 order-sm-2">
+              <h6 class="lh-lg fw-bold mb-4"> Help </h6>
+              <ul class="list-unstyled mb-md-4 mb-lg-0">
+                <li class="lh-lg"><a class="text-dark fs--1 text-decoration-none" href="#!">Support</a></li>
+                <li class="lh-lg"><a class="text-dark fs--1 text-decoration-none" href="#!">Sign Up </a></li>
+                <li class="lh-lg"><a class="text-dark fs--1 text-decoration-none" href="#!">Guide</a></li>
+                <li class="lh-lg"><a class="text-dark fs--1 text-decoration-none" href="#!">Reports</a></li>
+                <li class="lh-lg"><a class="text-dark fs--1 text-decoration-none" href="#!">Q&amp;A</a></li>
+              </ul>
+            </div>
+            <div class="col-12 col-sm-4 col-lg-3 mb-3 order-1 order-sm-3">
+              <h6 class="lh-lg fw-bold mb-4">Social Media </h6>
+              <ul class="list-unstyled mb-md-4 mb-lg-0">
+                <li class="list-inline-item"><a class="text-dark fs--1 text-decoration-none" href="#!"><img class="img-fluid" src="assets/img/icons/f.png" width="40" alt="" /></a></li>
+                <li class="list-inline-item"><a class="text-dark fs--1 text-decoration-none" href="#!"><img class="img-fluid" src="assets/img/icons/t.png" width="40" alt="" /></a></li>
+                <li class="list-inline-item"><a class="text-dark fs--1 text-decoration-none" href="#!"><img class="img-fluid" src="assets/img/icons/i.png" width="40" alt="" /></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="py-6">
+
+        <div class="container">
+          <div class="row flex-center px-3">
+            <div class="col-12 col-md-6 px-md-0 order-1 order-md-0">
+              <div class="text-center text-md-start">
+                
+              </div>
+            </div>
+            <div class="col-12 col-md-6 text-center text-md-end mb-3 mb-md-0"> <a href="#"><img class="img-fluid" src="assets/img/icons/pre-footer.png" height="14" alt="" /></a></div>
+          </div>
+        </div>
+        <!-- end of .container-->
+
+      </section>
+      <!-- <section> close ============================-->
+      <!-- ============================================-->
+
+
+    </main>
+    <!-- ===============================================-->
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+
+
+
+
+    <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+    <script src="vendors/@popperjs/popper.min.js"></script>
+    <script src="vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="vendors/is/is.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="assets/js/theme.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,700;1,900&amp;display=swap" rel="stylesheet">
+  </body>
 
 </html>
