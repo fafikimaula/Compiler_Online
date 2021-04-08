@@ -1,10 +1,11 @@
 const JAVA_KEY = "62";
 const CPP_KEY = "53";
 const PYTHON_KEY = "70";
-const SQL_KEY = "82";
-const NODEJS_KEY = "63";
+const V_KEY = "84";
+const RUBY_KEY = "72";
+const R_KEY = "80";
 
-const BASE_URL = "http://172.27.46.214:8081/submissions";
+const BASE_URL = "http://172.27.33.97:8081/submissions";
 //const API_URL = window.location.origin + '/' + window.location.pathname + 'api' + '/';
 const API_URL = "172.27.37.93:8080/";
 
@@ -16,11 +17,17 @@ function getExtention(key) {
         case "53":
             return "c"
             break;
+        case "80":
+            return "r"
+            break;
         case "70":
             return "py"
             break;
-        case "82":
-            return "sql"
+        case "84":
+            return "vb"
+            break;
+        case "72":
+            return "rb"
             break;
         case "63":
             return "js"
@@ -40,11 +47,17 @@ function getKey(extention) {
         case "c":
             return "53"
             break;
+        case "r":
+            return "80"
+            break;
         case "py":
             return "70"
             break;
-        case "sql":
-            return "82"
+        case "vb":
+            return "84"
+            break;
+        case "rb":
+            return "72"
             break;
         case "js":
             return "63"
@@ -493,7 +506,7 @@ function codeEditor(lang_id) {
     }
 
     if (lang_id == CPP_KEY) {
-        let cppcode = `#include <iostream >
+        let cppcode = `#include <iostream>
         using namespace std;
     int main() {
         cout << "Hello World"; \n
@@ -501,30 +514,27 @@ function codeEditor(lang_id) {
         editor.setValue(cppcode)
     }
 
-    if (lang_id == SQL_KEY) {
-        let sqlcode = `BEGIN TRANSACTION;
+    if (lang_id == RUBY_KEY) {
+        let rubycode = `puts "Hello World"`
 
-    /* Create a table called NAMES */
-    CREATE TABLE NAMES(Id integer PRIMARY KEY, Name text);
-
-    /* Create few records in this table */
-    INSERT INTO NAMES VALUES(1, 'Tom');
-    INSERT INTO NAMES VALUES(2, 'Lucy');
-    INSERT INTO NAMES VALUES(3, 'Frank');
-    INSERT INTO NAMES VALUES(4, 'Jane');
-    INSERT INTO NAMES VALUES(5, 'Robert');
-    COMMIT;
-
-    /* Display all the records from the table */
-    SELECT * FROM NAMES; `
-
-        editor.setValue(sqlcode)
+        editor.setValue(rubycode)
     }
 
-    if (lang_id == NODEJS_KEY) {
-        let javascriptcode = `console.log('Hello, world!')`
+    if (lang_id == R_KEY) {
+        let rcode = `print("Hello World")`
 
-        editor.setValue(javascriptcode)
+        editor.setValue(rcode)
+    }
+
+    if (lang_id == V_KEY) {
+        let visualcode = `Module VBModule
+        Sub Main()
+            Console.WriteLine("Hello World")
+        End Sub
+    End Module
+    `
+
+        editor.setValue(visualcode)
     }
 
 }
