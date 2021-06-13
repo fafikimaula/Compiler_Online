@@ -23,6 +23,8 @@
     <link rel="manifest" href="assets/img/favicons/manifest.json">
     <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine-ie11.min.js" defer></script>
 
 
     <!-- ===============================================-->
@@ -49,10 +51,9 @@
               <li class="nav-item"><a class="nav-link fw-medium" href="code.html">New Code</a></li>
               
             </ul>
-            <form class="d-flex py-3 py-lg-0"><a class="btn btn-light rounded-pill shadow fw-bold" href="signin.html" role="button">Login
-                <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
-                </svg></a></form>
+           <div id="authButton">
+
+           </div>
           </div>
         </div>
       </nav>
@@ -66,13 +67,13 @@
           <div class="row align-items-center">
             <div class="col-md-5 col-lg-7 order-md-1 pt-8"><img class="img-fluid" src="assets/img/illustrations/hero-header.png" alt="" /></div>
             <div class="col-md-7 col-lg-5 text-center text-md-start pt-5 pt-md-9">
-              <h1 class="mb-4 display-2 fw-bold">Save your code 
-                <br class="d-block d-lg-none d-xl-block" />program here.</h1>
+              <h1 class="mb-4 display-2 fw-bold">Save your programming 
+                <br class="d-block d-lg-none d-xl-block" />code here.</h1>
               <p class="mt-3 mb-4">Galaxy is online editor and compiler 
-                <br>where you can write and run code instantly. 
-                <br>Whenever you come up with new idea, 
-                <br>learn or teach programming, 
-                <br>you and others can just write and run code
+                <br>where you can wrote and run your code instantly. 
+                <br>Whenever you came up with an idea, 
+                <br>or want to learn or teach something new, 
+                <br>you can just come here and run their code
               </p><a class="btn btn-lg btn-info rounded-pill" href="code.html" role="button">Try for New Code</a>
             </div>
           </div>
@@ -100,11 +101,11 @@
                     <div class="card-body px-4 py-5 p-lg-3 p-md-4">
                       <h1 class="mb-4 fw-bold">We are a high-level 
                         <br class="d-md-none d-xxl-block" />online compiler</h1>
-                      <p class="card-text">The place to compile various code programming that you can access at anytime
-                        <br class="d-none d-xxl-block" />through the internet and where you can carry it.
-                        <br class="d-none d-xxl-block" />This very flexible compiler area has a high level of security. 
-                        <br class="d-none d-xxl-block" />To enter into your own account in galaxy you must enter the password 
-                        <br class="d-none d-xxl-block" />that you created when you registered in this website. 
+                      <p class="card-text">This is the  place  where you can compile various programming code 
+                        <br class="d-none d-xxl-block" />and access anytime as long as the devices connect to internet,
+                        <br class="d-none d-xxl-block" />This is very flexible compiler that has high level of security. 
+                        <br class="d-none d-xxl-block" />To use galaxy first you must creating new account by entering email and password in this website.
+                        <br class="d-none d-xxl-block" /> 
                         </p>
                     </div>
                   </div>
@@ -125,7 +126,7 @@
           <div class="row flex-center mb-5">
             <div class="col-auto text-center my-4">
               <h1 class="mb-4 fw-bold">Features</h1>
-              <p>Some of the features and advantages that we provide for those of you <br />who compile code program in this website.</p>
+              <p>Some features and advantages galaxy online compiler provide for you</p>
             </div>
           </div>
           <div class="row">
@@ -144,12 +145,12 @@
                   <div class="col-md-8 ps-md-3 pe-md-2 text-center text-md-start z-index-2">
                     <div class="card-body px-0">
                       <h4 class="card-title pt-md-5">Search File</h4>
-                      <p class="mb-0">Don’t worry if your code program is very 
-                        <br class="d-none d-lg-block"> much, the Galaxy | Online Compiler 
-                        <br class="d-none d-lg-block"> provides a search engine, 
-                        <br class="d-none d-lg-block"> which is useful for making it 
-                        <br class="d-none d-lg-block"> easier to find file effectively
-                        <br class="d-none d-lg-block">saving time. </p>
+                      <p class="mb-0">Don’t worry if you got a lot type of program 
+                        <br class="d-none d-lg-block"> to find, galaxy online compiler  provide 
+                        <br class="d-none d-lg-block"> search engine where you can find the one 
+                        <br class="d-none d-lg-block"> you looking for in a very minimal time, which means galaxy working effectively  saving your precious time.
+                        <br class="d-none d-lg-block"> 
+                        <br class="d-none d-lg-block"> </p>
                       <div><a class="btn btn-lg ps-0 pe-3" href="#" role="button">Learn more</a>
                         <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
                           <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
@@ -175,11 +176,10 @@
                   <div class="col-md-8 ps-md-3 pe-md-2 text-center text-md-start z-index-2">
                     <div class="card-body px-0">
                       <h4 class="card-title pt-md-5">Accessibility </h4>
-                      <p class="mb-0">This software is available on premises or as cloud based. If you choose to use the cloud, 
-                        <br>the solution will be accessible to you and 
-                        <br>your friends anytime and anywhere 
-                        <br>as long as an internet connection is available. 
-                        <br>This greatly increases the scope within which you can structure your programs and access them easily </p>
+                      <p class="mb-0">This software available on premises or as a cloud based. When you choose to use 
+                        <br> the cloud, the solution you’re searching 
+                        <br>for will be accessible to you anytime and anywhere as long as the internet connection available. 
+                       </p>
                       <div><a class="btn btn-lg ps-0 pe-3" href="#" role="button">Learn more</a>
                         <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
                           <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
@@ -205,11 +205,11 @@
                   <div class="col-md-8 ps-md-3 pe-md-2 text-center text-md-start z-index-2">
                     <div class="card-body px-0">
                       <h4 class="card-title pt-md-5">Print Out</h4>
-                      <p class="mb-0">Don't worry if you want 
-                        <br>your program files to print. 
-                        <br>The Galaxy | Online Compiler website has provided a print feature 
-                        <br>that can be used very much
-                        easy, </p>
+                      <p class="mb-0">You dont have to worry when 
+                        <br>you want to print your program,
+                        <br> because galaxy online compiler provides 
+                        <br>you the print features that you can use 
+                        <br>easily. </p>
                       <div><a class="btn btn-lg ps-0 pe-3" href="#" role="button">Learn more</a>
                         <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
                           <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
@@ -253,7 +253,7 @@
           </div>
         </div>
       </section>
-      <section class="py-5">
+     <!-- <section class="py-5">
         <div class="container-lg bg-info p-5 p-md-5 p-xl-7 rounded-3">
           <div class="row flex-center">
             <div class="col-12">
@@ -392,6 +392,7 @@
                 </div>
               </div>
             </div>
+          
             <div class="row px-3 px-md-0 mt-4">
               <div class="col-6 position-relative">
                 <ol class="carousel-indicators">
@@ -404,6 +405,7 @@
             </div>
           </div>
         </div>
+      -->
       </section>
 
 
@@ -503,8 +505,14 @@
     <script src="vendors/is/is.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <script src="assets/js/theme.js"></script>
+    
 
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,700;1,900&amp;display=swap" rel="stylesheet">
   </body>
-
+  <script src="auth.js"></script>
+  <script>
+      window.onload = function () {
+        checkLogin();
+      };
+  </script>
 </html>

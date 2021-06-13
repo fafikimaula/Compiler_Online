@@ -14,7 +14,7 @@ include_once("config.php");
     $id = $_POST['id'];
 
     // Insert user data into table
-    $new_file = $mysqli->prepare("UPDATE file set name=?, source_code=?, language_code=?,extention=? WHERE id=?");
+    $new_file = $mysqli->prepare("UPDATE file set name=?, source_code=?, language_code=?,extention=?,updated_at=current_timestamp WHERE id=?");
     //$new_file = mysqli_query($mysqli, "UPDATE file set source_code='$source_code' WHERE id='$id'");
     $new_file->bind_param('sssss',$name, $source_code , $language_code, $extention, $id);
     if ($new_file->execute()) {

@@ -5,7 +5,7 @@ const V_KEY = "84";
 const RUBY_KEY = "72";
 const R_KEY = "80";
 
-const BASE_URL = "http://172.27.33.97:8081/submissions";
+const BASE_URL = "http://172.18.48.76:8081/submissions";
 //const API_URL = window.location.origin + '/' + window.location.pathname + 'api' + '/';
 const API_URL = "172.27.37.93:8080/";
 
@@ -179,6 +179,107 @@ function getAllFile() {
     });
 }
 
+
+function searchFile() {
+    $(document).ready(function () {
+        $("#searchButton").click(function () {
+            let allFileElement = document.getElementById("allFile");
+            let searchInput = document.getElementById("searchFile");
+            //$("#ans").html("Loading...");
+            console.log("url : "+ "api/get_file.php?search=" + searchInput.value)
+            $.ajax({
+                url: "api/get_file.php?search=" + searchInput.value,
+                type: "get",
+                dataType: 'json',
+                success: function (response) {
+                    console.log("search file : " + response);
+                    allFileElement.innerHTML = '';
+                    for (const file of response) {
+                        console.log(file);
+                        let sourceCode = `${file.source_code}`;
+                        let fileName = file.name + `.` + file.extention;
+                        allFileElement.innerHTML += `
+         
+          <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\`` + `); document.getElementById("fileOpenExtention").innerHTML = ".` + file.extention + `"; document.getElementById("fileOpenName").innerHTML = "` + file.name + `"; document.getElementById("languageSelect").value  = "` + file.language_code + `"; document.getElementById("idOpenFile").innerHTML = "` + file.id + `";' x-data="{ open: false, color: false }"
+          @keydown.escape="open = false" @click.away="open = false">
+          <div
+              class="flex items-center bg-gray-800 hover:bg-blue-700 rounded-md p-3 text-white cursor-pointer transition duration-500 ease-in-out hover:shadow hover:bg-indigo-600">
+              <div>
+                  <svg fill="currentColor" class="w-10 h-10" style=""
+                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path
+                          d="M0 4c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4z">
+                      </path>
+                  </svg>
+
+              </div>
+              <div class="px-3 mr-auto">
+                  <h4 class="font-bold">` + fileName + `</h4>
+                  <small class="text-xs"> ` + file.created_at + `</small>
+              </div>
+              <div id="idFile" class="hidden">` + file.id + `</div>
+              <div class="relative">
+                  <a href="javascript:;" @click="open = !open">
+                      <svg fill="currentColor" class="w-5 h-5" style=""
+                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                          <path
+                              d="M10 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0-6a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
+                          </path>
+                      </svg>
+
+                  </a>
+
+                  <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                      x-transition:enter-start="transform opacity-0 scale-95"
+                      x-transition:enter-end="transform opacity-100 scale-100"
+                      x-transition:leave="transition ease-in duration-75"
+                      x-transition:leave-start="transform opacity-100 scale-100"
+                      x-transition:leave-end="transform opacity-0 scale-95"
+                      class="options absolute bg-white text-gray-600 origin-top-right right-0 mt-2 w-56 rounded-md shadow-lg overflow-hidden">
+                      <a href="javascript:;"
+                          class="flex py-3 px-2 text-sm font-bold hover:bg-gray-100 ">
+                          <span class="mr-auto">Edit</span>
+                          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
+                              <path
+                                  d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                              </path>
+                          </svg>
+                      </a>
+                      <a href="javascript:;"
+                          class="flex py-3 px-2 text-sm font-bold hover:bg-gray-100">
+                          <span class="mr-auto">Download</span>
+                          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
+                              <path fill-rule="evenodd"
+                                  d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"></path>
+                          </svg>
+                      </a>
+                      <a href="javascript:;"
+                          class="flex py-3 px-2 text-sm font-bold bg-red-400 text-white">
+                          <span class="mr-auto">Delete</span>
+                          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
+                              <path fill-rule="evenodd"
+                                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                  clip-rule="evenodd"></path>
+                          </svg>
+
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+         `;
+                    }
+                },
+                error: function (errormessage) {
+                    console.log(errormessage);
+                }
+            });
+        });
+    });
+
+}
+
 function loading() {
     document.getElementById("alert").innerHTML = '';
     document.getElementById("loading").innerHTML = '';
@@ -222,7 +323,7 @@ function errorAlert(message) {
 </button >
 </div >
         `;
-        document.getElementById("loading").innerHTML = '';
+    document.getElementById("loading").innerHTML = '';
 }
 
 function successAlert(message) {
@@ -252,7 +353,7 @@ function successAlert(message) {
 </button >
 </div >
         `;
-        document.getElementById("loading").innerHTML = '';
+    document.getElementById("loading").innerHTML = '';
 }
 
 function createNewFile() {
@@ -297,7 +398,7 @@ function getHistoryFile() {
         let allFileElement = document.getElementById("historyFile");
         //$("#ans").html("Loading...");
         $.ajax({
-            url: "api/get_file.php",
+            url: "api/get_file.php?history=true",
             type: "get",
             dataType: 'json',
             success: function (response) {
@@ -307,75 +408,76 @@ function getHistoryFile() {
                     console.log(file);
                     let sourceCode = `${file.source_code} `;
                     let fileName = file.name + `.` + file.extention;
-                    //                 allFileElement.innerHTML += `
-                    //     <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\`` + `); document.getElementById("fileOpenName").innerHTML = "` + fileName + `"; document.getElementById("languageSelect").value  = "` + file.language_code + `";' x - data="{ open: false, color: false }"
-                    // @keydown.escape="open = false" @click.away="open = false" >
-                    //     <div
-                    //         class="flex items-center bg-gray-800 hover:bg-blue-700 rounded-md p-3 text-white cursor-pointer transition duration-500 ease-in-out hover:shadow hover:bg-indigo-600">
-                    //         <div>
-                    //             <svg fill="currentColor" class="w-10 h-10" style=""
-                    //                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    //                 <path
-                    //                     d="M0 4c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4z">
-                    //                 </path>
-                    //             </svg>
-
-                    //         </div>
-                    //         <div class="px-3 mr-auto">
-                    //             <h4 class="font-bold">` + fileName + `</h4>
-                    //             <small class="text-xs"> ` + file.created_at + `</small>
-                    //         </div>
-                    //         <div class="relative">
-                    //             <a href="javascript:;" @click="open = !open">
-                    //                   <svg fill="currentColor" class="w-5 h-5" style=""
-                    //                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    //                 <path
-                    //                     d="M10 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0-6a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
-                    //                 </path>
-                    //             </svg>
-
-                    //               </a>
-
-                    //         <div x-show="open" x-transition:enter="transition ease-out duration-100"
-                    //             x-transition:enter-start="transform opacity-0 scale-95"
-                    //             x-transition:enter-end="transform opacity-100 scale-100"
-                    //             x-transition:leave="transition ease-in duration-75"
-                    //             x-transition:leave-start="transform opacity-100 scale-100"
-                    //             x-transition:leave-end="transform opacity-0 scale-95"
-                    //             class="options absolute bg-white text-gray-600 origin-top-right right-0 mt-2 w-56 rounded-md shadow-lg overflow-hidden">
-                    //             <a href="javascript:;"
-                    //                 class="flex py-3 px-2 text-sm font-bold hover:bg-gray-100 ">
-                    //                 <span class="mr-auto">Edit</span>
-                    //                 <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
-                    //                     <path
-                    //                         d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                    //                     </path>
-                    //                 </svg>
-                    //             </a>
-                    //             <a href="javascript:;"
-                    //                 class="flex py-3 px-2 text-sm font-bold hover:bg-gray-100">
-                    //                 <span class="mr-auto">Download</span>
-                    //                 <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
-                    //                     <path fill-rule="evenodd"
-                    //                         d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                    //                         clip-rule="evenodd"></path>
-                    //                 </svg>
-                    //             </a>
-                    //             <a href="javascript:;"
-                    //                 class="flex py-3 px-2 text-sm font-bold bg-red-400 text-white">
-                    //                 <span class="mr-auto">Delete</span>
-                    //                 <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
-                    //                     <path fill-rule="evenodd"
-                    //                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                    //                         clip-rule="evenodd"></path>
-                    //                 </svg>
-
-                    //             </a>
-                    //         </div>
-                    //     </div>
-                    //       </div >
-                    //   </div >
-                    //     `;
+                    allFileElement.innerHTML += `
+                                    <div class="mx-auto  w-full mt-2 mb-2" @click='var editor = ace.edit("editor"); editor.setValue(` + `\`${sourceCode}\`` + `); document.getElementById("fileOpenExtention").innerHTML = ".` + file.extention + `"; document.getElementById("fileOpenName").innerHTML = "` + file.name + `"; document.getElementById("languageSelect").value  = "` + file.language_code + `"; document.getElementById("idOpenFile").innerHTML = "` + file.id + `";' x-data="{ open: false, color: false }"
+                                    @keydown.escape="open = false" @click.away="open = false">
+                                    <div
+                                        class="flex items-center bg-gray-800 hover:bg-blue-700 rounded-md p-3 text-white cursor-pointer transition duration-500 ease-in-out hover:shadow hover:bg-indigo-600">
+                                        <div>
+                                            <svg fill="currentColor" class="w-10 h-10" style=""
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path
+                                                    d="M0 4c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4z">
+                                                </path>
+                                            </svg>
+                          
+                                        </div>
+                                        <div class="px-3 mr-auto">
+                                            <h4 class="font-bold">` + fileName + `</h4>
+                                            <small class="text-xs"> ` + file.created_at + `</small>
+                                        </div>
+                                        <div id="idFile" class="hidden">` + file.id + `</div>
+                                        <div class="relative">
+                                            <a href="javascript:;" @click="open = !open">
+                                                <svg fill="currentColor" class="w-5 h-5" style=""
+                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                    <path
+                                                        d="M10 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0-6a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 12a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
+                                                    </path>
+                                                </svg>
+                          
+                                            </a>
+                          
+                                            <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                                                x-transition:enter-start="transform opacity-0 scale-95"
+                                                x-transition:enter-end="transform opacity-100 scale-100"
+                                                x-transition:leave="transition ease-in duration-75"
+                                                x-transition:leave-start="transform opacity-100 scale-100"
+                                                x-transition:leave-end="transform opacity-0 scale-95"
+                                                class="options absolute bg-white text-gray-600 origin-top-right right-0 mt-2 w-56 rounded-md shadow-lg overflow-hidden">
+                                                <a href="javascript:;"
+                                                    class="flex py-3 px-2 text-sm font-bold hover:bg-gray-100 ">
+                                                    <span class="mr-auto">Edit</span>
+                                                    <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
+                                                        <path
+                                                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                                        </path>
+                                                    </svg>
+                                                </a>
+                                                <a href="javascript:;"
+                                                    class="flex py-3 px-2 text-sm font-bold hover:bg-gray-100">
+                                                    <span class="mr-auto">Download</span>
+                                                    <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
+                                                        <path fill-rule="evenodd"
+                                                            d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                </a>
+                                                <a href="javascript:;"
+                                                    class="flex py-3 px-2 text-sm font-bold bg-red-400 text-white">
+                                                    <span class="mr-auto">Delete</span>
+                                                    <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5" style="">
+                                                        <path fill-rule="evenodd"
+                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                          
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                   `;
                 }
             },
             error: function (errormessage) {
@@ -459,11 +561,12 @@ function codeEditor(lang_id) {
                                 console.log(response)
                                 if (response.status == true) {
                                     getAllFile()
+                                    getHistoryFile()
                                     successAlert("Berhasil menyimpan file")
                                 } else {
                                     errorAlert(response.pesan)
                                 }
-                                
+
                             },
                             error: function (errormessage) {
                                 console.log(errormessage);
@@ -559,7 +662,7 @@ function deleteFile() {
                 error: function (errormessage) {
                     console.log(errormessage.responseJSON);
                     errorAlert(errormessage.responseText);
-                    
+
                 }
             });
         });

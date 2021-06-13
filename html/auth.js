@@ -7,7 +7,38 @@ function getMainData() {
         console.log(id);
         if (id != null) {
             setTimeout("location.href = 'index.html';", 0);
-        } 
+        }
+    });
+}
+
+function checkLogin() {
+    $(document).ready(function () {
+        let id = localStorage.getItem("id");
+        console.log(id);
+        let authButton = document.getElementById("authButton");
+        if (id != null) {
+            console.log("sudah login");
+
+            authButton.innerHTML = `
+        <form class="d-flex py-3 py-lg-0"><a class="btn btn-light rounded-pill shadow fw-bold" href="signin.html" role="button" 
+        @click='localStorage.clear(); console.log("clear"); location.href = "signin.html";'
+        x-data="{ }">Logout
+            <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+            </svg></a></form>
+        `;
+
+        } else {
+            authButton.innerHTML = `
+        <form class="d-flex py-3 py-lg-0"><a class="btn btn-light rounded-pill shadow fw-bold" role="button" 
+        @click='localStorage.clear(); console.log("clear"); location.href = "signin.html";'
+        x-data="{ }">Login
+            <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#9C69E2" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+            </svg></a></form>
+        `;
+            console.log("belum login");
+        }
     });
 }
 
@@ -22,7 +53,7 @@ function signup() {
             }
             console.log("register, name:" + data.first_name)
             $.ajax({
-                url:  "api/signup.php",
+                url: "api/signup.php",
                 type: "post",
                 dataType: 'json',
                 data: data,
