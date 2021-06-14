@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['first_name'] = $row['first_name'];
             $_SESSION['last_name'] = $row['last_name'];
             $_SESSION['photo'] = $row['photo'];
+            $_SESSION['active'] = $row['active'];
         }
         $hasil =  array(
             'pesan' => "Berhasil Masuk", 
@@ -34,7 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'first_name' => $_SESSION['first_name'],
             'last_name' => $_SESSION['last_name'],
             'photo' =>  $_SESSION['photo'],
+            'active' =>  $_SESSION['active'],
         );
+
 
         echo json_encode($hasil);
     } else {

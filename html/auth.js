@@ -1,12 +1,27 @@
-// const API_URL = window.location.origin + '/' + window.location.pathname + 'api' + '/';
-const API_URL = "172.27.37.93:8080/api/";
+// const API_URL_AUTH = window.location.origin + '/' + window.location.pathname + 'api' + '/';
+const API_URL_AUTH = "172.27.37.93:8080/api/";
 
 function getMainData() {
     $(document).ready(function () {
         let id = localStorage.getItem("id");
-        console.log(id);
-        if (id != null) {
+        console.log("id " +id);
+        // if (id == null) {
+        //     setTimeout("location.href = 'index.html';", 0);
+        // }
+    });
+}
+
+function checkVerifikasi(){
+    $(document).ready(function () {
+        let id = localStorage.getItem("id");
+        console.log("id " +id);
+        if (id == null) {
             setTimeout("location.href = 'index.html';", 0);
+        }
+        let active = localStorage.getItem("active");
+        console.log("active " + active);
+        if (active == 0) {
+            setTimeout("location.href = 'notverify.html';", 0);
         }
     });
 }
@@ -64,6 +79,7 @@ function signup() {
                         localStorage.setItem("first_name", response.first_name);
                         localStorage.setItem("last_name", response.last_name);
                         localStorage.setItem("id", response.id);
+                        localStorage.setItem("active", response.active);
                         if (response.photo == null) {
                             localStorage.setItem("photo", "https://ui-avatars.com/api/?name=" + response.first_name + response.last_name + "&color=7F9CF5&background=EBF4FF");
                         } else {
@@ -88,7 +104,7 @@ function signin() {
                 "password": $("#password").val(),
             }
             console.log("signin, name:" + data.email)
-            console.log(API_URL)
+            console.log(API_URL_AUTH)
             $.ajax({
                 url: "api/signin.php",
                 type: "post",
@@ -102,6 +118,7 @@ function signin() {
                         localStorage.setItem("first_name", response.first_name);
                         localStorage.setItem("last_name", response.last_name);
                         localStorage.setItem("id", response.id);
+                        localStorage.setItem("active", response.active);
                         if (response.photo == null) {
                             localStorage.setItem("photo", "https://ui-avatars.com/api/?name=" + response.first_name + response.last_name + "&color=7F9CF5&background=EBF4FF");
                         } else {

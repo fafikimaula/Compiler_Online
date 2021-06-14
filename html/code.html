@@ -31,7 +31,7 @@
                     <!-- <div class="w-16 h-16 relative flex flex-shrink-0" style="filter: invert(100%);">
                       <img class="rounded-full w-full h-full object-cover" alt="ravisankarchinnam" src="https://avatars3.githubusercontent.com/u/22351907?s=60" />
                   </div> -->
-                    <a href="index.php">
+                    <a href="index.html">
                         <p class="text-3xl text-blue-600 font-bold hidden md:block group-hover:block">Galaxy</p>
                     </a>
 
@@ -215,6 +215,7 @@
 
 <script type="text/javascript " src="assets/js/main.js "></script>
 <script src="texteditor.js "></script>
+<script src="auth.js"></script>
 <script>
     function onSelectChange(selectedVal) {
 
@@ -225,7 +226,8 @@
         }
     }
     window.onload = function () {
-        getMainData()
+        getMainData();
+        checkVerifikasi();
         codeEditor();
         getAllFile();
         getHistoryFile();
