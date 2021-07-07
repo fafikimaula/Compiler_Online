@@ -5,7 +5,7 @@ const V_KEY = "84";
 const RUBY_KEY = "72";
 const R_KEY = "80";
 
-const BASE_URL = "http://172.18.56.250:8081/submissions";
+const BASE_URL = "http://172.17.117.211:8081/submissions";
 //const API_URL = window.location.origin + '/' + window.location.pathname + 'api' + '/';
 const API_URL = "172.27.37.93:8080/";
 
@@ -495,6 +495,7 @@ function codeEditor(lang_id) {
         $("#runButton").click(function () {
             let code = editor.getValue();
             $("#ans").html("Loading...");
+            var startTime = new Date();
             loading();
             console.log(code);
             let data = {
@@ -540,9 +541,15 @@ function codeEditor(lang_id) {
                         $("#ans").html(response.stdout);
                         if (response.stdout) {
                             successAlert("Program berhasil dijalankan");
+                            console.log("================");
+                            var delay =  Math.abs((new Date().getTime() - startTime.getTime()) / 1000);
+                            console.log("Delay : " + delay +" s");
+                            console.log("================");
                         } else {
                             errorAlert(response.stderr);
                         }
+
+                        
 
                         let dataSave = {
                             "name": document.getElementById("fileOpenName").innerHTML,
